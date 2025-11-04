@@ -28,7 +28,8 @@ import com.prmto.snozeloo.presentation.theme.blue50
 @Composable
 fun AlarmListItem(
     modifier: Modifier = Modifier,
-    alarmItemUIModel: AlarmItemUIModel
+    alarmItemUIModel: AlarmItemUIModel,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -53,7 +54,7 @@ fun AlarmListItem(
                     uncheckedThumbColor = Color.White,
                     uncheckedBorderColor = blue50
                 ),
-                onCheckedChange = {}
+                onCheckedChange = onCheckedChange
             )
         }
 
@@ -99,7 +100,8 @@ private fun AlarmItemPreview() {
                 isVibrationEnabled = false,
                 alarmVolume = 5f,
                 alarmRingtone = "Default"
-            )
+            ),
+            onCheckedChange = {}
         )
     }
 }

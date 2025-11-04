@@ -12,7 +12,7 @@ sealed class AlarmGraph {
     @Serializable
     data object AlarmList : AlarmGraph()
     @Serializable
-    data object AlarmDetail : AlarmGraph()
+    data class AlarmDetail(val alarmId: String?) : AlarmGraph()
     @Serializable
     data object RingtoneList : AlarmGraph()
 }

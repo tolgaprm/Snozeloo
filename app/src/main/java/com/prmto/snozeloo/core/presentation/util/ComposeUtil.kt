@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.core.util
+package com.prmto.snozeloo.core.presentation.util
 
 import androidx.compose.runtime.Composable
 

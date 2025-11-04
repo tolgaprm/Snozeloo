@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.core
+package com.prmto.snozeloo.core.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

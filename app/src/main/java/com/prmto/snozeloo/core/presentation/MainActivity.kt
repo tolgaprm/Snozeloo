@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.core
+package com.prmto.snozeloo.core.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

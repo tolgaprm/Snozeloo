@@ -1,5 +1,6 @@
 package com.prmto.snozeloo.presentation.alarm.list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prmto.snozeloo.R
-import com.prmto.snozeloo.core.util.ShowSectionsWithEmptyState
+import com.prmto.snozeloo.core.presentation.util.ShowSectionsWithEmptyState
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.presentation.alarm.components.AlarmListItem
@@ -32,13 +33,16 @@ import com.prmto.snozeloo.presentation.alarm.components.EmptyAlarmSection
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 
 @Composable
- fun AlarmListScreen(alarms: List<AlarmItemUIModel>?) {
+fun AlarmListScreen(
+    alarms: List<AlarmItemUIModel>?,
+    onAction: (AlarmListAction) -> Unit
+) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = { onAction(AlarmListAction.OnClickAddAlarm) },
                 shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
@@ -65,7 +69,7 @@ import com.prmto.snozeloo.presentation.theme.SnozelooTheme
             ShowSectionsWithEmptyState(
                 data = alarms,
                 onEmptyState = { EmptyAlarmSection() },
-                onNotEmptyState = { AlarmListContent(alarms = it) }
+                onNotEmptyState = { AlarmListContent(alarms = it, onAction = onAction) }
             )
         }
     }
@@ -74,16 +78,29 @@ import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 
 @Composable
 private fun AlarmListContent(
-    alarms: List<AlarmItemUIModel>
+    alarms: List<AlarmItemUIModel>,
+    onAction: (AlarmListAction) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(vertical = 24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
-    ){
+    ) {
         items(alarms) { alarmItem ->
             AlarmListItem(
-                modifier = Modifier.fillMaxWidth(),
-                alarmItemUIModel = alarmItem
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        enabled = true,
+                        onClick = { onAction(AlarmListAction.OnClickAlarmItem(alarmItem.id)) }),
+                alarmItemUIModel = alarmItem,
+                onCheckedChange = {
+                    onAction(
+                        AlarmListAction.ChangeAlarmEnabled(
+                            alarmId = alarmItem.id,
+                            isEnabled = it
+                        )
+                    )
+                }
             )
         }
     }
@@ -117,7 +134,8 @@ private fun AlarmListScreenPreview() {
                     alarmRingtone = "Default",
                     isVibrationEnabled = false,
                 )
-            )
+            ),
+            onAction = {}
         )
     }
 }
