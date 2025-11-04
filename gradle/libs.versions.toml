@@ -13,6 +13,9 @@ hilt_version = '2.51.1'
 com-google-devtools-ksp = "2.0.20-1.0.24"
 splashVersion = "1.0.1"
 navigationVersion = "2.8.5"
+room = "2.6.1"
+kotlinxSerializationJson = "1.6.3"
+coroutines = "1.8.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +33,7 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashVersion" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 
 dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt_version" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt_version" }
@@ -40,10 +44,18 @@ hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", ver
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationVersion" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationVersion" }
 
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp" }
 google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt_version" }
-
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

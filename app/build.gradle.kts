@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.hilt)
     alias(libs.plugins.google.ksp)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -67,4 +68,13 @@ dependencies {
 
     implementation(libs.androidx.splash)
     implementation(libs.androidx.navigation.compose)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    testImplementation(libs.androidx.room.testing)
+
+    // Kotlinx Serialization JSON
+    implementation(libs.kotlinx.serialization.json)
 }
