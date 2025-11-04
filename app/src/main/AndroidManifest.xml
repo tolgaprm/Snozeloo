@@ -16,7 +16,7 @@
             android:name=".core.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Snozeloo">
+            android:theme="@style/Theme.Snozeloo.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

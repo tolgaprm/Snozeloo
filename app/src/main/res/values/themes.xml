@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.Snozeloo" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Snozeloo.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_blue</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/alarm</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/splash_blue</item>
+        <item name="postSplashScreenTheme">@style/Theme.Snozeloo</item>
+    </style>
 </resources>
