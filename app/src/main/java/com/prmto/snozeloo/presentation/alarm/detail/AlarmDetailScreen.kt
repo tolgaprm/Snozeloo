@@ -1,20 +1,13 @@
 package com.prmto.snozeloo.presentation.alarm.detail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -24,21 +17,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prmto.snozeloo.R
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
-import com.prmto.snozeloo.presentation.alarm.components.DayChip
-import com.prmto.snozeloo.presentation.alarm.components.SnoozelooSwitch
+import com.prmto.snozeloo.presentation.components.DayChip
+import com.prmto.snozeloo.presentation.components.SnoozelooSwitch
 import com.prmto.snozeloo.presentation.alarm.detail.components.DetailColumnItemSection
 import com.prmto.snozeloo.presentation.alarm.detail.components.DetailItemSection
 import com.prmto.snozeloo.presentation.alarm.detail.components.DetailRowItemSection
@@ -50,6 +40,7 @@ import com.prmto.snozeloo.presentation.theme.buttonColors
 @Composable
 fun AlarmDetailScreen(
     alarmDetail: AlarmItemUIModel?,
+    onAction: (AlarmDetailAction) -> Unit,
 ) {
     alarmDetail ?: return
     Scaffold(
@@ -62,13 +53,17 @@ fun AlarmDetailScreen(
                 navigationIcon = {
                     CloseButton(
                         enabled = false,
-                        onClick = { }
+                        onClick = {
+                            onAction(AlarmDetailAction.OnClickClose)
+                        }
                     )
                 },
                 actions = {
                     ActionButton(
                         enabled = true,
-                        onClick = {}
+                        onClick = {
+                            onAction(AlarmDetailAction.OnClickSave)
+                        }
                     )
                 }
             )
@@ -85,7 +80,10 @@ fun AlarmDetailScreen(
             }
 
             DetailRowItemSection(
-                title = stringResource(R.string.alarm_name)
+                title = stringResource(R.string.alarm_name),
+                onClickItem = {
+
+                }
             ) {
                 Text(
                     text = alarmDetail.title,
@@ -107,7 +105,7 @@ fun AlarmDetailScreen(
                             modifier = Modifier
                                 .padding(end = 5.dp)
                                 .clickable {
-
+                                    onAction(AlarmDetailAction.OnClickedRepeatingDay(dayValue))
                                 }
                         )
                     }
@@ -115,7 +113,10 @@ fun AlarmDetailScreen(
             }
 
             DetailRowItemSection(
-                title = "Alarm ringtone"
+                title = stringResource(R.string.alarm_ringtone),
+                onClickItem = {
+                    onAction(AlarmDetailAction.OnClickAlarmRingtone)
+                }
             ) {
                 Text(
                     text = alarmDetail.alarmRingtone,
@@ -129,7 +130,9 @@ fun AlarmDetailScreen(
             ) {
                 Slider(
                     value = alarmDetail.alarmVolume,
-                    onValueChange = { },
+                    onValueChange = {
+                        onAction(AlarmDetailAction.OnChangedAlarmVolume(it))
+                    },
                     valueRange = 0f..10f,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -140,7 +143,9 @@ fun AlarmDetailScreen(
             ) {
                 SnoozelooSwitch(
                     checked = alarmDetail.isVibrationEnabled,
-                    onCheckedChange = { }
+                    onCheckedChange = {
+                        onAction(AlarmDetailAction.OnChangedAlarmVibrationEnabled(it))
+                    }
                 )
             }
         }
@@ -207,7 +212,8 @@ private fun AlarmDetailScreenPreview() {
                 alarmVolume = 5f,
                 alarmRingtone = "Default",
                 isVibrationEnabled = true,
-            )
+            ),
+            onAction = {}
         )
     }
 }

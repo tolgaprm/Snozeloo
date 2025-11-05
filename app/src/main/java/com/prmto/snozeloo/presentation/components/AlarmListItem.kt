@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.presentation.alarm.components
+package com.prmto.snozeloo.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +21,6 @@ import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.presentation.theme.AlarmItemShape
 import com.prmto.snozeloo.presentation.theme.Gray
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
-import com.prmto.snozeloo.presentation.theme.blue50
 
 @Composable
 fun AlarmListItem(

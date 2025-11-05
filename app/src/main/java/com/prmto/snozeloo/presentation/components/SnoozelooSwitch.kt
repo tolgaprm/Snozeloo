@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.presentation.alarm.components
+package com.prmto.snozeloo.presentation.components
 
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults

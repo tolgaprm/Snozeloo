@@ -7,4 +7,5 @@
     <string name="repeat">Repeat</string>
     <string name="alarm_volume">Alarm Volume</string>
     <string name="vibrate">Vibrate</string>
+    <string name="alarm_ringtone">Alarm ringtone</string>
 </resources>

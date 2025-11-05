@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.presentation.alarm.components
+package com.prmto.snozeloo.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

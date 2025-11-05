@@ -2,6 +2,7 @@ package com.prmto.snozeloo.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -11,9 +12,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.prmto.snozeloo.core.presentation.util.ObserveAsEvents
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListScreen
-import com.prmto.snozeloo.presentation.alarm.AlarmSharedViewModel
-import com.prmto.snozeloo.presentation.alarm.AlarmViewEvent
+import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewEvent
 import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailScreen
+import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewEvent
+import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewModel
+import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewModel
 
 @Composable
 fun NavigationRoot(
@@ -29,7 +32,7 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
         startDestination = AlarmGraph.AlarmList
     ) {
         composable<AlarmGraph.AlarmList> {
-            val viewModel = it.sharedViewModel<AlarmSharedViewModel>(navController)
+            val viewModel = hiltViewModel<AlarmListViewModel>()
             val alarms by viewModel.alarmListState.collectAsStateWithLifecycle()
             AlarmListScreen(
                 alarms = alarms,
@@ -40,7 +43,7 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
                 flow = viewModel.viewEvent
             ) { event ->
                 when (event) {
-                    is AlarmViewEvent.NavigateToAlarmDetail -> {
+                    is AlarmListViewEvent.NavigateToAlarmDetail -> {
                         navController.navigateToAlarmDetail(alarmId = event.alarmId)
                     }
                 }
@@ -48,11 +51,23 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
         }
 
         composable<AlarmGraph.AlarmDetail> {
-            val viewModel = it.sharedViewModel<AlarmSharedViewModel>(navController)
+            val viewModel = hiltViewModel<AlarmDetailViewModel>()
             val alarmDetail by viewModel.alarmDetailState.collectAsStateWithLifecycle()
             AlarmDetailScreen(
-                alarmDetail = alarmDetail
+                alarmDetail = alarmDetail,
+                onAction = viewModel::onAlarmDetailAction
             )
+
+            ObserveAsEvents(flow = viewModel.viewEvent) {event->
+                when (event) {
+                    is AlarmDetailViewEvent.PopBackStack -> {
+                        navController.popBackStack()
+                    }
+                    is AlarmDetailViewEvent.NavigateToRingtoneList -> {
+                        navController.navigateToRingtoneList()
+                    }
+                }
+            }
         }
 
         composable<AlarmGraph.RingtoneList> {
@@ -63,4 +78,8 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
 
 private fun NavController.navigateToAlarmDetail(alarmId: String?) {
     navigate(AlarmGraph.AlarmDetail(alarmId))
+}
+
+private fun NavController.navigateToRingtoneList() {
+    navigate(AlarmGraph.RingtoneList)
 }

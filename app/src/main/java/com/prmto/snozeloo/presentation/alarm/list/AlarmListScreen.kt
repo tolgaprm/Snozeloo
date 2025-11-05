@@ -28,8 +28,8 @@ import com.prmto.snozeloo.R
 import com.prmto.snozeloo.core.presentation.util.ShowSectionsWithEmptyState
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
-import com.prmto.snozeloo.presentation.alarm.components.AlarmListItem
-import com.prmto.snozeloo.presentation.alarm.components.EmptyAlarmSection
+import com.prmto.snozeloo.presentation.components.AlarmListItem
+import com.prmto.snozeloo.presentation.components.EmptyAlarmSection
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 
 @Composable

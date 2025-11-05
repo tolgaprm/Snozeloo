@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prmto.snozeloo.domain.model.DayValue
-import com.prmto.snozeloo.presentation.alarm.components.DayChip
+import com.prmto.snozeloo.presentation.components.DayChip
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 import kotlin.random.Random
 
@@ -48,6 +48,7 @@ fun DetailItemSection(
 fun DetailRowItemSection(
     title: String,
     modifier: Modifier = Modifier,
+    onClickItem: () -> Unit = {},
     content: @Composable RowScope.() -> Unit,
 ) {
     DetailItemSection {
