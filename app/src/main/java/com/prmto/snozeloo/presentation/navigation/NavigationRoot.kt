@@ -2,6 +2,7 @@ package com.prmto.snozeloo.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -59,14 +60,16 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
                 onAction = viewModel::onAlarmDetailAction
             )
 
-            ObserveAsEvents(flow = viewModel.viewEvent) {event->
+            ObserveAsEvents(flow = viewModel.viewEvent) { event ->
                 when (event) {
                     is AlarmDetailViewEvent.PopBackStack -> {
                         navController.popBackStack()
                     }
+
                     is AlarmDetailViewEvent.NavigateToRingtoneList -> {
                         navController.navigateToRingtoneList()
                     }
+
                 }
             }
         }
