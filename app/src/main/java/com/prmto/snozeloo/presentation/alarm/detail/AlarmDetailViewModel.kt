@@ -10,6 +10,7 @@ import com.prmto.snozeloo.core.presentation.util.BaseViewModel
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.domain.model.defaultAlarmItemUiModel
+import com.prmto.snozeloo.domain.usecase.ValidateTimeInputUseCase
 import com.prmto.snozeloo.presentation.navigation.AlarmGraph
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableSet
@@ -25,7 +26,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AlarmDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val validateTimeInputUseCase: ValidateTimeInputUseCase
 ) : BaseViewModel<AlarmDetailViewEvent>() {
 
     private val selectedAlarmId = savedStateHandle.toRoute<AlarmGraph.AlarmDetail>().alarmId
@@ -135,32 +137,9 @@ class AlarmDetailViewModel @Inject constructor(
             onUpdate()
         }
 
-        val hour = alarmDetailState.value.timeHour
-        val minute = alarmDetailState.value.timeMinute
-
-        if (hour.isEmpty() || minute.isEmpty()) {
-            isSaveButtonEnabled = false
-            return
-        }
-
-        if (hour.length != 2 || minute.length != 2) {
-            isSaveButtonEnabled = false
-            return
-        }
-
-        val hourInt = hour.toInt()
-        val minuteInt = minute.toInt()
-
-        if (hourInt >= 24 || hourInt < 0) {
-            isSaveButtonEnabled = false
-            return
-        }
-
-        if (minuteInt < 0 || minuteInt >= 60) {
-            isSaveButtonEnabled = false
-            return
-        }
-
-        isSaveButtonEnabled = true
+        isSaveButtonEnabled = validateTimeInputUseCase(
+            hour = alarmDetailState.value.timeHour,
+            minute = alarmDetailState.value.timeMinute
+        )
     }
 }
