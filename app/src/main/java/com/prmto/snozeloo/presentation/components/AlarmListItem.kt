@@ -21,6 +21,7 @@ import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.presentation.theme.AlarmItemShape
 import com.prmto.snozeloo.presentation.theme.Gray
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
+import kotlinx.collections.immutable.toImmutableSet
 
 @Composable
 fun AlarmListItem(
@@ -69,7 +70,8 @@ fun AlarmListItem(
                 DayChip(
                     dayValue = dayValue,
                     isSelected = alarmItemUIModel.repeatingDays.contains(dayValue),
-                    modifier = Modifier.padding(end = 5.dp)
+                    modifier = Modifier.padding(end = 5.dp),
+                    onClick = {}
                 )
             }
         }
@@ -85,8 +87,9 @@ private fun AlarmItemPreview() {
             alarmItemUIModel = AlarmItemUIModel(
                 id = "1",
                 title = "Wake Up",
-                time = "10:00",
-                repeatingDays = setOf(DayValue.MONDAY, DayValue.WEDNESDAY, DayValue.FRIDAY),
+                timeHour = "10",
+                timeMinute = "00",
+                repeatingDays = setOf(DayValue.MONDAY, DayValue.WEDNESDAY, DayValue.FRIDAY).toImmutableSet(),
                 nextOccurrenceAlarmTime = "Alarm in 30 minutes",
                 isEnabled = true,
                 isVibrationEnabled = false,

@@ -55,6 +55,7 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
             val alarmDetail by viewModel.alarmDetailState.collectAsStateWithLifecycle()
             AlarmDetailScreen(
                 alarmDetail = alarmDetail,
+                isSaveButtonEnable = viewModel.isSaveButtonEnabled,
                 onAction = viewModel::onAlarmDetailAction
             )
 

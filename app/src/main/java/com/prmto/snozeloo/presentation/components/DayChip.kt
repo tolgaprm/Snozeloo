@@ -15,6 +15,7 @@ import com.prmto.snozeloo.presentation.theme.blue100
 fun DayChip(
     dayValue: DayValue,
     isSelected: Boolean,
+    onClick:()-> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -34,7 +35,7 @@ fun DayChip(
             selectedBorderColor = MaterialTheme.colorScheme.primary,
             borderColor = blue100
         ),
-        onClick = { }
+        onClick = onClick
     )
 }
 
@@ -44,7 +45,8 @@ private fun DayChipPreview() {
     SnozelooTheme {
         DayChip(
             dayValue = DayValue.MONDAY,
-            isSelected = true
+            isSelected = true,
+            onClick = {}
         )
     }
 }

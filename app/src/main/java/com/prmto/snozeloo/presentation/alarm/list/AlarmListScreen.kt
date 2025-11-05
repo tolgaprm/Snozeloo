@@ -31,10 +31,15 @@ import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.presentation.components.AlarmListItem
 import com.prmto.snozeloo.presentation.components.EmptyAlarmSection
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toImmutableSet
 
 @Composable
 fun AlarmListScreen(
-    alarms: List<AlarmItemUIModel>?,
+    alarms: ImmutableList<AlarmItemUIModel>?,
     onAction: (AlarmListAction) -> Unit
 ) {
     Scaffold(
@@ -78,7 +83,7 @@ fun AlarmListScreen(
 
 @Composable
 private fun AlarmListContent(
-    alarms: List<AlarmItemUIModel>,
+    alarms: ImmutableList<AlarmItemUIModel>,
     onAction: (AlarmListAction) -> Unit
 ) {
     LazyColumn(
@@ -111,12 +116,13 @@ private fun AlarmListContent(
 private fun AlarmListScreenPreview() {
     SnozelooTheme {
         AlarmListScreen(
-            alarms = listOf(
+            alarms = persistentListOf(
                 AlarmItemUIModel(
                     id = "1",
                     title = "Wake Up",
-                    time = "10:00",
-                    repeatingDays = DayValue.entries.toSet(),
+                    timeHour = "10",
+                    timeMinute = "00",
+                    repeatingDays = DayValue.entries.toImmutableSet(),
                     nextOccurrenceAlarmTime = "Alarm in 30 minutes",
                     isEnabled = false,
                     alarmVolume = 5f,
@@ -126,8 +132,9 @@ private fun AlarmListScreenPreview() {
                 AlarmItemUIModel(
                     id = "2",
                     title = "Education",
-                    time = "04:00",
-                    repeatingDays = setOf(DayValue.MONDAY, DayValue.WEDNESDAY, DayValue.FRIDAY),
+                    timeHour = "04",
+                    timeMinute = "00",
+                    repeatingDays = persistentSetOf(DayValue.MONDAY, DayValue.WEDNESDAY, DayValue.FRIDAY),
                     nextOccurrenceAlarmTime = "Alarm in 30 minutes",
                     isEnabled = true,
                     alarmVolume = 5f,

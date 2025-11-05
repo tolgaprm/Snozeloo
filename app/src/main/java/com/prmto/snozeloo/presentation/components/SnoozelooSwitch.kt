@@ -14,6 +14,7 @@ fun SnoozelooSwitch(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Switch(
+        modifier = modifier,
         checked = checked,
         colors = SwitchDefaults.colors(
             uncheckedTrackColor = blue50,

@@ -25,23 +25,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.presentation.components.DayChip
+import com.prmto.snozeloo.presentation.theme.AlarmItemShape
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 import kotlin.random.Random
 
-@Composable
-fun DetailItemSection(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(10.dp))
-            .background(Color.White)
-            .padding(16.dp),
-    ) {
-        content()
-    }
+fun Modifier.detailItemSectionModifier(): Modifier {
+    return this
+        .clip(AlarmItemShape)
+        .background(Color.White)
+        .padding(16.dp)
 }
 
 @Composable
@@ -51,41 +43,43 @@ fun DetailRowItemSection(
     onClickItem: () -> Unit = {},
     content: @Composable RowScope.() -> Unit,
 ) {
-    DetailItemSection {
-        Row(
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyMedium
-            )
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .detailItemSectionModifier()
+            .clickable(onClick = onClickItem),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyMedium
+        )
 
-            content()
-        }
+        content()
     }
 }
 
 @Composable
 fun DetailColumnItemSection(
-    title: String,
+    title: String?,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    DetailItemSection {
-        Column(
-            modifier = modifier.fillMaxWidth(),
-        ) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .detailItemSectionModifier(),
+    ) {
+        if (!title.isNullOrEmpty()) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyMedium
             )
-
             Spacer(modifier = Modifier.height(10.dp))
-
-            content()
         }
+
+        content()
     }
 }
 
@@ -116,9 +110,10 @@ private fun DetailColumnItemSectionPreview() {
                         dayValue = dayValue,
                         isSelected = Random.nextBoolean(),
                         modifier = Modifier
-                            .padding(end = 5.dp)
-                            .clickable {}
-                    )
+                            .padding(end = 5.dp),
+                        onClick = {
+
+                        })
                 }
             }
         }

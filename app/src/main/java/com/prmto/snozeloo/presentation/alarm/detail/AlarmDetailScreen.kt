@@ -1,10 +1,10 @@
 package com.prmto.snozeloo.presentation.alarm.detail
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,6 +20,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,22 +28,23 @@ import androidx.compose.ui.unit.dp
 import com.prmto.snozeloo.R
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
-import com.prmto.snozeloo.presentation.components.DayChip
-import com.prmto.snozeloo.presentation.components.SnoozelooSwitch
 import com.prmto.snozeloo.presentation.alarm.detail.components.DetailColumnItemSection
-import com.prmto.snozeloo.presentation.alarm.detail.components.DetailItemSection
 import com.prmto.snozeloo.presentation.alarm.detail.components.DetailRowItemSection
+import com.prmto.snozeloo.presentation.components.DayChip
+import com.prmto.snozeloo.presentation.components.SnoozelooEditText
+import com.prmto.snozeloo.presentation.components.SnoozelooSwitch
 import com.prmto.snozeloo.presentation.theme.Gray
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 import com.prmto.snozeloo.presentation.theme.buttonColors
+import kotlinx.collections.immutable.persistentSetOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlarmDetailScreen(
-    alarmDetail: AlarmItemUIModel?,
+    alarmDetail: AlarmItemUIModel,
+    isSaveButtonEnable: Boolean,
     onAction: (AlarmDetailAction) -> Unit,
 ) {
-    alarmDetail ?: return
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +54,7 @@ fun AlarmDetailScreen(
                 title = {},
                 navigationIcon = {
                     CloseButton(
-                        enabled = false,
+                        enabled = true,
                         onClick = {
                             onAction(AlarmDetailAction.OnClickClose)
                         }
@@ -60,7 +62,7 @@ fun AlarmDetailScreen(
                 },
                 actions = {
                     ActionButton(
-                        enabled = true,
+                        enabled = isSaveButtonEnable,
                         onClick = {
                             onAction(AlarmDetailAction.OnClickSave)
                         }
@@ -72,11 +74,36 @@ fun AlarmDetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it),
+                .padding(it)
+                .padding(top = 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            DetailItemSection {
+            DetailColumnItemSection(title = null) {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    SnoozelooEditText(
+                        value = alarmDetail.timeHour,
+                        onValueChange = {
+                            onAction(AlarmDetailAction.OnChangedAlarmHour(it))
+                        }
+                    )
 
+                    Text(
+                        ":",
+                        style = MaterialTheme.typography.displayMedium,
+                        color = Gray
+                    )
+
+                    SnoozelooEditText(
+                        value = alarmDetail.timeMinute,
+                        onValueChange = {
+                            onAction(AlarmDetailAction.OnChangedAlarmMinute(it))
+                        }
+                    )
+                }
             }
 
             DetailRowItemSection(
@@ -103,10 +130,10 @@ fun AlarmDetailScreen(
                             dayValue = dayValue,
                             isSelected = alarmDetail.repeatingDays.contains(dayValue),
                             modifier = Modifier
-                                .padding(end = 5.dp)
-                                .clickable {
-                                    onAction(AlarmDetailAction.OnClickedRepeatingDay(dayValue))
-                                }
+                                .padding(end = 5.dp),
+                            onClick = {
+                                onAction(AlarmDetailAction.OnClickedRepeatingDay(dayValue))
+                            }
                         )
                     }
                 }
@@ -197,22 +224,19 @@ private fun ActionButton(
 private fun AlarmDetailScreenPreview() {
     SnozelooTheme {
         AlarmDetailScreen(
-            AlarmItemUIModel(
-                id = "2",
-                title = "Work",
-                time = "04:00",
-                repeatingDays = setOf(
-                    DayValue.MONDAY,
-                    DayValue.TUESDAY,
-                    DayValue.WEDNESDAY,
-                    DayValue.FRIDAY
-                ),
-                nextOccurrenceAlarmTime = "Alarm in 30 minutes",
-                isEnabled = true,
+            alarmDetail = AlarmItemUIModel(
+                id = "",
+                title = "",
+                timeHour = "00",
+                timeMinute = "00",
+                alarmRingtone = "",
                 alarmVolume = 5f,
-                alarmRingtone = "Default",
-                isVibrationEnabled = true,
+                isVibrationEnabled = false,
+                repeatingDays = persistentSetOf(),
+                nextOccurrenceAlarmTime = "",
+                isEnabled = true
             ),
+            isSaveButtonEnable = false,
             onAction = {}
         )
     }
