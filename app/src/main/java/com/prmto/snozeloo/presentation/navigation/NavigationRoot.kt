@@ -13,6 +13,7 @@ import com.prmto.snozeloo.core.presentation.util.ObserveAsEvents
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListScreen
 import com.prmto.snozeloo.presentation.alarm.AlarmSharedViewModel
 import com.prmto.snozeloo.presentation.alarm.AlarmViewEvent
+import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailScreen
 
 @Composable
 fun NavigationRoot(
@@ -48,6 +49,10 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
 
         composable<AlarmGraph.AlarmDetail> {
             val viewModel = it.sharedViewModel<AlarmSharedViewModel>(navController)
+            val alarmDetail by viewModel.alarmDetailState.collectAsStateWithLifecycle()
+            AlarmDetailScreen(
+                alarmDetail = alarmDetail
+            )
         }
 
         composable<AlarmGraph.RingtoneList> {

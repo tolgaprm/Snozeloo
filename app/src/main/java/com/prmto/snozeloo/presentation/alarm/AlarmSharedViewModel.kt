@@ -14,6 +14,8 @@ class AlarmSharedViewModel @Inject constructor() : BaseViewModel<AlarmViewEvent>
     private val _alarmListState = MutableStateFlow<List<AlarmItemUIModel>>(emptyList())
     val alarmListState: StateFlow<List<AlarmItemUIModel>> = _alarmListState.asStateFlow()
 
+    private val _alarmDetailState = MutableStateFlow<AlarmItemUIModel?>(null)
+    val alarmDetailState: StateFlow<AlarmItemUIModel?> = _alarmDetailState.asStateFlow()
 
     fun onAlarmListAction(action: AlarmListAction) {
         when (action) {

@@ -47,13 +47,8 @@ fun AlarmListItem(
                 style = MaterialTheme.typography.labelMedium
             )
 
-            Switch(
+            SnoozelooSwitch(
                 checked = alarmItemUIModel.isEnabled,
-                colors = SwitchDefaults.colors(
-                    uncheckedTrackColor = blue50,
-                    uncheckedThumbColor = Color.White,
-                    uncheckedBorderColor = blue50
-                ),
                 onCheckedChange = onCheckedChange
             )
         }
