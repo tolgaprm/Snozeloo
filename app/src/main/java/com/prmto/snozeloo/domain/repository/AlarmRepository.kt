@@ -11,7 +11,6 @@ interface AlarmRepository {
     suspend fun getAlarmById(alarmId: String): AlarmItemUIModel?
 
    suspend fun insertAlarm(alarmItemUIModel: AlarmItemUIModel)
-
    suspend fun updateAlarmEnabled(alarmId: String, isEnabled: Boolean)
 
    suspend fun deleteAlarmById(alarmId: String)

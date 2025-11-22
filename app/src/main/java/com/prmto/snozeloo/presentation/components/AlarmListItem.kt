@@ -35,15 +35,24 @@ fun AlarmListItem(
             .clip(AlarmItemShape)
             .padding(16.dp)
     ) {
-        Row(
+                Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = alarmItemUIModel.title,
-                style = MaterialTheme.typography.labelMedium
-            )
+            // If there's no title, show the time in the main row.
+            // Otherwise, the time will be shown below.
+            if (alarmItemUIModel.title.isEmpty()) {
+                Text(
+                    text = alarmItemUIModel.time,
+                    style = MaterialTheme.typography.displayMedium
+                )
+            } else {
+                Text(
+                    text = alarmItemUIModel.title,
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
 
             SnoozelooSwitch(
                 checked = alarmItemUIModel.isActive,
@@ -51,10 +60,13 @@ fun AlarmListItem(
             )
         }
 
-        Text(
-            text = alarmItemUIModel.time,
-            style = MaterialTheme.typography.displayMedium
-        )
+        // If a title exists, display the time below it.
+        if (alarmItemUIModel.title.isNotEmpty()) {
+            Text(
+                text = alarmItemUIModel.time,
+                style = MaterialTheme.typography.displayMedium
+            )
+        }
 
         Text(
             modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
@@ -86,10 +98,14 @@ private fun AlarmItemPreview() {
         AlarmListItem(
             alarmItemUIModel = AlarmItemUIModel(
                 id = "1",
-                title = "Wake Up",
+                title = "",
                 timeHour = "10",
                 timeMinute = "00",
-                repeatingDays = setOf(DayValue.MONDAY, DayValue.WEDNESDAY, DayValue.FRIDAY).toImmutableSet(),
+                repeatingDays = setOf(
+                    DayValue.MONDAY,
+                    DayValue.WEDNESDAY,
+                    DayValue.FRIDAY
+                ).toImmutableSet(),
                 nextOccurrenceAlarmTime = "Alarm in 30 minutes",
                 isActive = true,
                 isVibrationEnabled = false,

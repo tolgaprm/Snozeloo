@@ -3,6 +3,7 @@ package com.prmto.snozeloo.data.local.convertor
 import com.prmto.snozeloo.data.local.entity.AlarmEntity
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import kotlinx.collections.immutable.toImmutableSet
+import java.util.UUID
 
 fun AlarmEntity.toAlarmItemUIModel(): AlarmItemUIModel {
     return AlarmItemUIModel(
@@ -23,7 +24,7 @@ fun AlarmEntity.toAlarmItemUIModel(): AlarmItemUIModel {
     )
 }
 
-fun AlarmItemUIModel.toAlarmEntity(): AlarmEntity {
+fun AlarmItemUIModel.toAlarmEntity(id: String): AlarmEntity {
     return AlarmEntity(
         id = id,
         title = title,

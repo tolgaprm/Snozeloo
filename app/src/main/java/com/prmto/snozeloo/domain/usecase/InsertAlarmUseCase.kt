@@ -9,10 +9,6 @@ class InsertAlarmUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(alarmItemUIModel: AlarmItemUIModel): Result<String> {
 
-        if (alarmItemUIModel.title.isBlank()){
-            return Result.failure(Exception("Alarm title cannot be blank"))
-        }
-
         if (alarmItemUIModel.repeatingDays.isEmpty()){
             return Result.failure(Exception("Alarm repeating days cannot be empty"))
         }

@@ -2,6 +2,7 @@ package com.prmto.snozeloo.domain.model
 
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
+import java.util.Calendar
 
 
 data class AlarmItemUIModel(
@@ -34,11 +35,14 @@ enum class DayValue {
 }
 
 fun defaultAlarmItemUiModel(): AlarmItemUIModel {
+    val currentTime = Calendar.getInstance()
+    val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
+    val currentMinute = currentTime.get(Calendar.MINUTE)
     return AlarmItemUIModel(
         id = "",
         title = "",
-        timeHour = "00",
-        timeMinute = "00",
+        timeHour = currentHour.toString(),
+        timeMinute = currentMinute.toString(),
         alarmRingtone = "Default",
         alarmVolume = 5f,
         isVibrationEnabled = false,

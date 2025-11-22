@@ -9,6 +9,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.UUID
 import javax.inject.Inject
 
 class AlarmRepositoryImpl @Inject constructor(
@@ -27,7 +28,10 @@ class AlarmRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertAlarm(alarmItemUIModel: AlarmItemUIModel) {
-        alarmDao.insertAlarm(alarmItemUIModel.toAlarmEntity())
+        val id = alarmItemUIModel.id.ifEmpty {
+            UUID.randomUUID().toString()
+        }
+        alarmDao.insertAlarm(alarmItemUIModel.toAlarmEntity(id))
     }
 
     override suspend fun updateAlarmEnabled(alarmId: String, isEnabled: Boolean) {
