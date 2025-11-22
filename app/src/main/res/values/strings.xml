@@ -9,4 +9,6 @@
     <string name="vibrate">Vibrate</string>
     <string name="alarm_ringtone">Alarm ringtone</string>
     <string name="delete">Delete</string>
+    <string name="turn_off">Turn off</string>
+    <string name="snooze_for_5_minutes">Snooze for 5 minutes</string>
 </resources>

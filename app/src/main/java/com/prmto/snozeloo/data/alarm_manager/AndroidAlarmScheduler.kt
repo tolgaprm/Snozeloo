@@ -16,7 +16,7 @@ class AndroidAlarmScheduler @Inject constructor(
     private val alarmManager: AlarmManager
 ) : AlarmScheduler {
 
-    @SuppressLint("ScheduleExactAlarm")
+    @SuppressLint("MissingPermission")
     override fun scheduleAlarm(alarmItemUIModel: AlarmItemUIModel) {
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra(ALARM_ITEM_ID, alarmItemUIModel.id)

@@ -17,6 +17,11 @@ private val montserrat = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    displayLarge = TextStyle(
+        fontFamily = montserrat,
+        fontWeight = FontWeight.Medium,
+        fontSize = 82.sp
+    ),
     displayMedium = TextStyle(
         fontFamily = montserrat,
         fontWeight = FontWeight.Medium,
