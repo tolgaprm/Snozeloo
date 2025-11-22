@@ -3,6 +3,7 @@ package com.prmto.snozeloo.data.repository
 import com.prmto.snozeloo.data.local.convertor.toAlarmEntity
 import com.prmto.snozeloo.data.local.convertor.toAlarmItemUIModel
 import com.prmto.snozeloo.data.local.dao.AlarmDao
+import com.prmto.snozeloo.domain.alarm_manager.AlarmScheduler
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.repository.AlarmRepository
 import kotlinx.collections.immutable.ImmutableList
@@ -13,7 +14,8 @@ import java.util.UUID
 import javax.inject.Inject
 
 class AlarmRepositoryImpl @Inject constructor(
-    private val alarmDao: AlarmDao
+    private val alarmDao: AlarmDao,
+    private val alarmScheduler: AlarmScheduler
 ) : AlarmRepository {
     override fun getAllAlarms(): Flow<ImmutableList<AlarmItemUIModel>> {
         return alarmDao.getAllAlarms().map {
@@ -31,6 +33,7 @@ class AlarmRepositoryImpl @Inject constructor(
         val id = alarmItemUIModel.id.ifEmpty {
             UUID.randomUUID().toString()
         }
+        alarmScheduler.scheduleAlarm(alarmItemUIModel)
         alarmDao.insertAlarm(alarmItemUIModel.toAlarmEntity(id))
     }
 

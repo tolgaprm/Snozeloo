@@ -51,3 +51,16 @@ fun defaultAlarmItemUiModel(): AlarmItemUIModel {
         isActive = true
     )
 }
+
+fun DayValue.toCalendarDay(): Int {
+    return when (this) {
+        DayValue.SUNDAY -> Calendar.SUNDAY
+        DayValue.MONDAY -> Calendar.MONDAY
+        DayValue.TUESDAY -> Calendar.TUESDAY
+        DayValue.WEDNESDAY -> Calendar.WEDNESDAY
+        DayValue.THURSDAY -> Calendar.THURSDAY
+        DayValue.FRIDAY -> Calendar.FRIDAY
+        DayValue.SATURDAY -> Calendar.SATURDAY
+    }
+}
+
