@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.core.presentation.util
+package com.prmto.snozeloo.core.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

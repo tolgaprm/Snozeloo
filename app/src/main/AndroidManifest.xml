@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".core.presentation.SnozelooApp"
+        android:name=".core.SnozelooApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Snozeloo">
         <activity
-            android:name=".core.presentation.MainActivity"
+            android:name=".core.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Snozeloo.Splash">

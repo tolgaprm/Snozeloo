@@ -19,13 +19,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -211,6 +212,19 @@ fun AlarmDetailScreen(
                     }
                 )
             }
+
+            if (alarmDetail.id.isNotEmpty()){
+                Button(
+                    onClick = {
+                        onAction(AlarmDetailAction.OnClickDelete)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = stringResource(R.string.delete)
+                    )
+                }
+            }
         }
     }
 }
@@ -261,7 +275,7 @@ private fun AlarmDetailScreenPreview() {
     SnozelooTheme {
         AlarmDetailScreen(
             alarmDetail = AlarmItemUIModel(
-                id = "",
+                id = "deneme",
                 title = "",
                 timeHour = "00",
                 timeMinute = "00",
@@ -270,7 +284,7 @@ private fun AlarmDetailScreenPreview() {
                 isVibrationEnabled = false,
                 repeatingDays = persistentSetOf(),
                 nextOccurrenceAlarmTime = "",
-                isEnabled = true
+                isActive = true
             ),
             isSaveButtonEnable = false,
             onAction = {}

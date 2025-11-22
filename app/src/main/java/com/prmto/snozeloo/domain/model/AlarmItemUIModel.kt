@@ -9,7 +9,7 @@ data class AlarmItemUIModel(
     val title: String,
     val timeHour: String,
     val timeMinute: String,
-    val isEnabled: Boolean,
+    val isActive: Boolean,
     val repeatingDays: ImmutableSet<DayValue>,
     val nextOccurrenceAlarmTime: String,
     val isVibrationEnabled: Boolean,
@@ -44,6 +44,6 @@ fun defaultAlarmItemUiModel(): AlarmItemUIModel {
         isVibrationEnabled = false,
         repeatingDays = persistentSetOf(),
         nextOccurrenceAlarmTime = "",
-        isEnabled = true
+        isActive = true
     )
 }

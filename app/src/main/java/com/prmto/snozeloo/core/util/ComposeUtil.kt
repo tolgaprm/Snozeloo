@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.core.presentation.util
+package com.prmto.snozeloo.core.util
 
 import androidx.compose.runtime.Composable
 import kotlinx.collections.immutable.ImmutableList

@@ -25,14 +25,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prmto.snozeloo.R
-import com.prmto.snozeloo.core.presentation.util.ShowSectionsWithEmptyState
+import com.prmto.snozeloo.core.util.ShowSectionsWithEmptyState
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.presentation.components.AlarmListItem
 import com.prmto.snozeloo.presentation.components.EmptyAlarmSection
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableSet
@@ -124,7 +123,7 @@ private fun AlarmListScreenPreview() {
                     timeMinute = "00",
                     repeatingDays = DayValue.entries.toImmutableSet(),
                     nextOccurrenceAlarmTime = "Alarm in 30 minutes",
-                    isEnabled = false,
+                    isActive = false,
                     alarmVolume = 5f,
                     alarmRingtone = "Default",
                     isVibrationEnabled = false
@@ -136,7 +135,7 @@ private fun AlarmListScreenPreview() {
                     timeMinute = "00",
                     repeatingDays = persistentSetOf(DayValue.MONDAY, DayValue.WEDNESDAY, DayValue.FRIDAY),
                     nextOccurrenceAlarmTime = "Alarm in 30 minutes",
-                    isEnabled = true,
+                    isActive = true,
                     alarmVolume = 5f,
                     alarmRingtone = "Default",
                     isVibrationEnabled = false,

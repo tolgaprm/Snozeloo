@@ -46,7 +46,7 @@ fun AlarmListItem(
             )
 
             SnoozelooSwitch(
-                checked = alarmItemUIModel.isEnabled,
+                checked = alarmItemUIModel.isActive,
                 onCheckedChange = onCheckedChange
             )
         }
@@ -91,7 +91,7 @@ private fun AlarmItemPreview() {
                 timeMinute = "00",
                 repeatingDays = setOf(DayValue.MONDAY, DayValue.WEDNESDAY, DayValue.FRIDAY).toImmutableSet(),
                 nextOccurrenceAlarmTime = "Alarm in 30 minutes",
-                isEnabled = true,
+                isActive = true,
                 isVibrationEnabled = false,
                 alarmVolume = 5f,
                 alarmRingtone = "Default"

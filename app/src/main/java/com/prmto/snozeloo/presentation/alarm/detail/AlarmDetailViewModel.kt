@@ -5,29 +5,32 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.prmto.snozeloo.core.presentation.util.BaseViewModel
+import com.prmto.snozeloo.core.util.BaseViewModel
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.domain.model.defaultAlarmItemUiModel
+import com.prmto.snozeloo.domain.repository.AlarmRepository
+import com.prmto.snozeloo.domain.usecase.InsertAlarmUseCase
 import com.prmto.snozeloo.domain.usecase.ValidateTimeInputUseCase
 import com.prmto.snozeloo.presentation.navigation.AlarmGraph
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.PersistentSet
-import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AlarmDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val validateTimeInputUseCase: ValidateTimeInputUseCase
+    private val validateTimeInputUseCase: ValidateTimeInputUseCase,
+    private val alarmRepository: AlarmRepository,
+    private val insertAlarmUseCase: InsertAlarmUseCase
 ) : BaseViewModel<AlarmDetailViewEvent>() {
 
     private val selectedAlarmId = savedStateHandle.toRoute<AlarmGraph.AlarmDetail>().alarmId
@@ -40,21 +43,31 @@ class AlarmDetailViewModel @Inject constructor(
 
     init {
         if (selectedAlarmId != null) {
-            // Get the alarm from database
+            viewModelScope.launch {
+                alarmRepository.getAlarmById(selectedAlarmId)?.let {
+                    _alarmDetailState.value = it
+                }
+            }
         }
     }
 
     fun onAlarmDetailAction(action: AlarmDetailAction) {
         when (action) {
             is AlarmDetailAction.OnClickClose -> {
-                // _alarmDetailState.value = null
                 sendViewEvent(AlarmDetailViewEvent.PopBackStack)
             }
 
             is AlarmDetailAction.OnClickSave -> {
-                // Update database
-                //  _alarmDetailState.value = null
-                sendViewEvent(AlarmDetailViewEvent.PopBackStack)
+                viewModelScope.launch {
+                    val result = insertAlarmUseCase(alarmDetailState.value)
+                    result.onFailure {
+                        sendViewEvent(AlarmDetailViewEvent.ShowSnackbarMessage(it.message.toString()))
+                    }
+
+                    result.onSuccess {
+                        sendViewEvent(AlarmDetailViewEvent.PopBackStack)
+                    }
+                }
             }
 
             is AlarmDetailAction.OnClickAlarmRingtone -> {
@@ -124,6 +137,15 @@ class AlarmDetailViewModel @Inject constructor(
                     it.copy(
                         isVibrationEnabled = action.isVibrationEnabled
                     )
+                }
+            }
+
+            is AlarmDetailAction.OnClickDelete -> {
+                viewModelScope.launch {
+                    selectedAlarmId?.let {
+                        alarmRepository.deleteAlarmById(selectedAlarmId)
+                        sendViewEvent(AlarmDetailViewEvent.PopBackStack)
+                    }
                 }
             }
         }

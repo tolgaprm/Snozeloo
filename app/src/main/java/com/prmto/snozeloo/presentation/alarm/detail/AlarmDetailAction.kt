@@ -7,6 +7,9 @@ sealed interface AlarmDetailAction {
     data object OnClickClose : AlarmDetailAction
     data object OnClickSave : AlarmDetailAction
     data object OnClickAlarmRingtone : AlarmDetailAction
+
+    data object OnClickDelete : AlarmDetailAction
+
     data class OnClickedRepeatingDay(val day: DayValue) : AlarmDetailAction
     data class OnChangedAlarmHour(val hour: String) : AlarmDetailAction
     data class OnChangedAlarmMinute(val minute: String) : AlarmDetailAction
