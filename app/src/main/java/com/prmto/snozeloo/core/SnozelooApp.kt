@@ -9,4 +9,8 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class SnozelooApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+    }
 }

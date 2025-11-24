@@ -41,6 +41,11 @@
             android:enabled="true"
             android:exported="false" />
 
+        <receiver
+            android:name=".data.alarm_manager.NotificationActionReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
     </application>
 
 </manifest>

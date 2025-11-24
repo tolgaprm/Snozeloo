@@ -3,11 +3,10 @@ package com.prmto.snozeloo.data.local.convertor
 import com.prmto.snozeloo.data.local.entity.AlarmEntity
 import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import kotlinx.collections.immutable.toImmutableSet
-import java.util.UUID
 
 fun AlarmEntity.toAlarmItemUIModel(): AlarmItemUIModel {
     return AlarmItemUIModel(
-        id = id,
+        id = id ,
         title = title,
         timeHour = timeHour,
         timeMinute = timeMinute,

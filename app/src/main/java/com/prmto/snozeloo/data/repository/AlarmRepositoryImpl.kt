@@ -14,8 +14,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 class AlarmRepositoryImpl @Inject constructor(
-    private val alarmDao: AlarmDao,
-    private val alarmScheduler: AlarmScheduler
+    private val alarmDao: AlarmDao
 ) : AlarmRepository {
     override fun getAllAlarms(): Flow<ImmutableList<AlarmItemUIModel>> {
         return alarmDao.getAllAlarms().map {
@@ -25,23 +24,22 @@ class AlarmRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAlarmById(alarmId: String): AlarmItemUIModel {
-        return alarmDao.getAlarmById(alarmId).toAlarmItemUIModel()
+    override suspend fun getAlarmById(alarmId: String): AlarmItemUIModel? {
+        return alarmDao.getAlarmById(alarmId)?.toAlarmItemUIModel()
     }
 
     override suspend fun insertAlarm(alarmItemUIModel: AlarmItemUIModel) {
         val id = alarmItemUIModel.id.ifEmpty {
             UUID.randomUUID().toString()
         }
-        alarmScheduler.scheduleAlarm(alarmItemUIModel)
         alarmDao.insertAlarm(alarmItemUIModel.toAlarmEntity(id))
     }
 
     override suspend fun updateAlarmEnabled(alarmId: String, isEnabled: Boolean) {
-       alarmDao.updateAlarmEnabled(alarmId, isEnabled)
+        alarmDao.updateAlarmEnabled(alarmId, isEnabled)
     }
 
     override suspend fun deleteAlarmById(alarmId: String) {
-      alarmDao.deleteAlarmById(alarmId)
+        alarmDao.deleteAlarmById(alarmId)
     }
 }

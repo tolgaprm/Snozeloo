@@ -6,5 +6,7 @@ interface AlarmScheduler {
 
     fun scheduleAlarm(alarmItemUIModel: AlarmItemUIModel)
 
-    fun cancelAlarm(alarmItemUIModel: AlarmItemUIModel)
+    fun cancelAlarm(alarmId: String)
+
+    fun scheduleAlarmForSnooze(alarmItemId: String, snoozeTimeInMinute: Long)
 }

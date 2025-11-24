@@ -3,6 +3,9 @@ import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
 object DateUtil {
+
+    const val ALARM_SNOOZE_TIME_IN_MINUTE = 5L
+
     fun getNextOccurrenceAlarmTime(
         alarmHourTime: String,
         alarmMinuteTime: String,

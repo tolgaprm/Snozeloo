@@ -15,7 +15,7 @@ data class AlarmItemUIModel(
     val nextOccurrenceAlarmTime: String,
     val isVibrationEnabled: Boolean,
     val alarmVolume: Float,
-    val alarmRingtone: String
+    val alarmRingtone: String,
 ) {
     val time get() = "$timeHour : $timeMinute"
 }
@@ -63,4 +63,3 @@ fun DayValue.toCalendarDay(): Int {
         DayValue.SATURDAY -> Calendar.SATURDAY
     }
 }
-

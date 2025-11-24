@@ -1,21 +1,17 @@
 package com.prmto.snozeloo.di
 
 import android.app.AlarmManager
-import android.app.NotificationManager
 import android.content.Context
 import androidx.room.Room
 import com.prmto.snozeloo.data.alarm_manager.AndroidAlarmScheduler
 import com.prmto.snozeloo.data.local.SnoozelooDatabase
-import com.prmto.snozeloo.data.local.dao.AlarmDao
 import com.prmto.snozeloo.data.repository.AlarmRepositoryImpl
 import com.prmto.snozeloo.domain.alarm_manager.AlarmScheduler
 import com.prmto.snozeloo.domain.repository.AlarmRepository
-import com.prmto.snozeloo.notification.AlarmNotifier
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -38,10 +34,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAlarmRepository(
-        snoozelooDatabase: SnoozelooDatabase,
-        alarmScheduler: AlarmScheduler
+        snoozelooDatabase: SnoozelooDatabase
     ): AlarmRepository {
-        return AlarmRepositoryImpl(snoozelooDatabase.alarmDao, alarmScheduler)
+        return AlarmRepositoryImpl(snoozelooDatabase.alarmDao)
     }
 
     @Provides
@@ -59,13 +54,5 @@ object AppModule {
         alarmManager: AlarmManager
     ): AlarmScheduler {
         return AndroidAlarmScheduler(context, alarmManager)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAlarmNotifier(
-        @ApplicationContext context: Context,
-    ): AlarmNotifier {
-        return AlarmNotifier( context)
     }
 }

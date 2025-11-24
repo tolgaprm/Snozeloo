@@ -1,5 +1,6 @@
 package com.prmto.snozeloo.reminder
 
+import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
@@ -7,43 +8,28 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.prmto.snozeloo.R
 import com.prmto.snozeloo.core.util.ObserveAsEvents
-import com.prmto.snozeloo.data.alarm_manager.AndroidAlarmScheduler
-import com.prmto.snozeloo.domain.model.AlarmItemUIModel
-import com.prmto.snozeloo.domain.model.DayValue
+import com.prmto.snozeloo.core.util.getAlarmItemAndIsSnooze
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.collections.immutable.toImmutableSet
 
 @AndroidEntryPoint
 class ReminderActivity : ComponentActivity() {
 
     private val viewModel: ReminderViewModel by viewModels()
 
+    private lateinit var notificationManager: NotificationManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showOverLockscreen()
         actionBar?.hide()
         enableEdgeToEdge()
-        intent.getStringExtra(AndroidAlarmScheduler.Companion.ALARM_ITEM_ID)
-        viewModel.getAlarmItem(intent.getStringExtra(AndroidAlarmScheduler.Companion.ALARM_ITEM_ID))
+        val alarmIntentExt = intent.getAlarmItemAndIsSnooze()
+        viewModel.getAlarmItem(alarmIntentExt)
+
+        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(alarmIntentExt.alarmItemId?.hashCode() ?: 0)
         setContent {
             val alarmItem = viewModel.alarmItemState.value
             SnozelooTheme {
@@ -60,6 +46,7 @@ class ReminderActivity : ComponentActivity() {
                     is ReminderViewEvent.TurnOffAlarm -> {
                         // ringtone stop
                         this.finish()
+                        notificationManager.cancel(alarmIntentExt.alarmItemId?.hashCode() ?: 0)
                     }
                 }
             }

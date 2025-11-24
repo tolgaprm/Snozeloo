@@ -12,6 +12,7 @@ import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.domain.model.defaultAlarmItemUiModel
 import com.prmto.snozeloo.domain.repository.AlarmRepository
+import com.prmto.snozeloo.domain.usecase.DeleteAlarmUseCase
 import com.prmto.snozeloo.domain.usecase.InsertAlarmUseCase
 import com.prmto.snozeloo.domain.usecase.ValidateTimeInputUseCase
 import com.prmto.snozeloo.presentation.navigation.AlarmGraph
@@ -30,7 +31,8 @@ class AlarmDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val validateTimeInputUseCase: ValidateTimeInputUseCase,
     private val alarmRepository: AlarmRepository,
-    private val insertAlarmUseCase: InsertAlarmUseCase
+    private val insertAlarmUseCase: InsertAlarmUseCase,
+    private val deleteAlarmUseCase: DeleteAlarmUseCase
 ) : BaseViewModel<AlarmDetailViewEvent>() {
 
     private val selectedAlarmId = savedStateHandle.toRoute<AlarmGraph.AlarmDetail>().alarmId
@@ -143,7 +145,7 @@ class AlarmDetailViewModel @Inject constructor(
             is AlarmDetailAction.OnClickDelete -> {
                 viewModelScope.launch {
                     selectedAlarmId?.let {
-                        alarmRepository.deleteAlarmById(selectedAlarmId)
+                        deleteAlarmUseCase(selectedAlarmId)
                         sendViewEvent(AlarmDetailViewEvent.PopBackStack)
                     }
                 }
