@@ -71,7 +71,7 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
             )
 
             viewModel.onAlarmDetailAction(
-                AlarmDetailAction.OnAlarmRingtoneNameChanged(
+                AlarmDetailAction.OnSelectAlarmRingtone(
                     ringtoneName = ringtoneName,
                     ringtoneUri = ringtoneUri
                 )

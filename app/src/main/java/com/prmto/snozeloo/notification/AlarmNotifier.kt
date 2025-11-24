@@ -48,6 +48,7 @@ class AlarmNotifier @Inject constructor(
                 "Snooze for 5 minutes",
                 snoozeAlarmPendingIntent(intent)
             )
+            .setSilent(true)
             .setFullScreenIntent(createPendingIntent(intent), true)
             .build()
     }

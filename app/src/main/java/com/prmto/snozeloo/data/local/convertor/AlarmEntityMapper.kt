@@ -24,7 +24,7 @@ fun AlarmEntity.toAlarmItemUIModel(): AlarmItemUIModel {
     )
 }
 
-fun AlarmItemUIModel.toAlarmEntity(id: String): AlarmEntity {
+fun AlarmItemUIModel.toAlarmEntity(): AlarmEntity {
     return AlarmEntity(
         id = id,
         title = title,

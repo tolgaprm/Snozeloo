@@ -29,10 +29,7 @@ class AlarmRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertAlarm(alarmItemUIModel: AlarmItemUIModel) {
-        val id = alarmItemUIModel.id.ifEmpty {
-            UUID.randomUUID().toString()
-        }
-        alarmDao.insertAlarm(alarmItemUIModel.toAlarmEntity(id))
+        alarmDao.insertAlarm(alarmItemUIModel.toAlarmEntity())
     }
 
     override suspend fun updateAlarmEnabled(alarmId: String, isEnabled: Boolean) {

@@ -18,7 +18,6 @@ import javax.inject.Inject
 class RingtoneViewModel @Inject constructor(
     private val getRingtonesUseCase: GetRingtonesUseCase,
     savedStateHandle: SavedStateHandle,
-    private val alarmRepository: AlarmRepository
 ) : BaseViewModel<RingtoneUiEvent>() {
 
     var uiState by mutableStateOf(RingtoneState())
@@ -48,24 +47,12 @@ class RingtoneViewModel @Inject constructor(
             }
 
             RingtoneAction.OnSave -> {
-                if (ringtoneRoute.alarmId != null) {
-                    viewModelScope.launch {
-                        if (uiState.selectedRingtone?.uri.isNullOrEmpty() || uiState.selectedRingtone?.name.isNullOrEmpty()) return@launch
-
-                        alarmRepository.updateAlarmRingtoneUriAndName(
-                            alarmId = ringtoneRoute.alarmId,
-                            ringtoneUri = uiState.selectedRingtone?.uri!!,
-                            ringtoneName = uiState.selectedRingtone?.name!!
-                        )
-
-                        sendViewEvent(
-                            RingtoneUiEvent.PopBackStack(
-                                selectedRingtoneName = uiState.selectedRingtone?.name,
-                                selectedRingtoneUri = uiState.selectedRingtone?.uri
-                            )
-                        )
-                    }
-                }
+                sendViewEvent(
+                    RingtoneUiEvent.PopBackStack(
+                        selectedRingtoneName = uiState.selectedRingtone?.name,
+                        selectedRingtoneUri = uiState.selectedRingtone?.uri
+                    )
+                )
             }
         }
     }

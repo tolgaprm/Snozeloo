@@ -31,21 +31,24 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val coroutineScope = CoroutineScope(Dispatchers.IO)
         val alarmId = intent.getStringExtra(AndroidAlarmScheduler.ALARM_ITEM_ID)
-        alarmNotifier.showNotification(intent)
+
 
         coroutineScope.launch {
             if (alarmId == null) return@launch
             val alarmItem = alarmRepository.getAlarmById(alarmId)
 
+            if (alarmItem?.isActive == false) return@launch
+
             ringtonePlayer.play(
                 context,
-                alarmItem?.alarmRingtoneUri,
-                alarmItem?.alarmVolume
+                alarmItem?.alarmRingtoneUri
             )
 
             if (alarmItem?.isVibrationEnabled == true) {
                 vibrationHelper.startVibration()
             }
+
+            alarmNotifier.showNotification(intent)
         }
     }
 }

@@ -156,13 +156,15 @@ class AlarmDetailViewModel @Inject constructor(
                 }
             }
 
-            is AlarmDetailAction.OnAlarmRingtoneNameChanged -> {
-                if (action.ringtoneName != null && action.ringtoneUri != null){
-                    _alarmDetailState.update {
-                        it.copy(
-                            alarmRingtoneName = action.ringtoneName,
-                            alarmRingtoneUri = action.ringtoneUri
-                        )
+            is AlarmDetailAction.OnSelectAlarmRingtone -> {
+                if (action.ringtoneName != null && action.ringtoneUri != null) {
+                    viewModelScope.launch {
+                        _alarmDetailState.update {
+                            it.copy(
+                                alarmRingtoneName = action.ringtoneName,
+                                alarmRingtoneUri = action.ringtoneUri
+                            )
+                        }
                     }
                 }
             }
