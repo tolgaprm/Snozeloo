@@ -12,6 +12,7 @@ import com.prmto.snozeloo.core.util.ObserveAsEvents
 import com.prmto.snozeloo.core.util.getAlarmItemAndIsSnooze
 import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtoneMediaPlayer
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
+import com.prmto.snozeloo.util.VibrationHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -24,6 +25,9 @@ class ReminderActivity : ComponentActivity() {
 
     @Inject
     lateinit var ringtonePlayer: RingtoneMediaPlayer
+
+    @Inject
+    lateinit var vibrationHelper: VibrationHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,7 @@ class ReminderActivity : ComponentActivity() {
                         // ringtone stop
                         this.finish()
                         ringtonePlayer.stop()
+                        vibrationHelper.stopVibration()
                         notificationManager.cancel(alarmIntentExt.alarmItemId?.hashCode() ?: 0)
                     }
                 }

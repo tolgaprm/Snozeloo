@@ -9,6 +9,7 @@ import com.prmto.snozeloo.core.util.getAlarmItemAndIsSnooze
 import com.prmto.snozeloo.domain.alarm_manager.AlarmScheduler
 import com.prmto.snozeloo.notification.AlarmNotifier
 import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtoneMediaPlayer
+import com.prmto.snozeloo.util.VibrationHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,9 +22,16 @@ class NotificationActionReceiver : BroadcastReceiver() {
     @Inject
     lateinit var ringtonePlayer: RingtoneMediaPlayer
 
+    @Inject
+    lateinit var vibrationHelper: VibrationHelper
+
     override fun onReceive(context: Context?, intent: Intent?) {
+        if (context == null) return
+
         val notificationManager =
-            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        vibrationHelper = VibrationHelper(context)
 
         when (intent?.action) {
             AlarmNotifier.TURN_OFF_ALARM_ACTION -> {
@@ -31,6 +39,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                     intent.getAlarmItemAndIsSnooze().alarmItemId?.hashCode() ?: 0
                 )
                 ringtonePlayer.stop()
+                vibrationHelper.stopVibration()
             }
 
             AlarmNotifier.SNOOZE_ALARM_ACTION -> {
@@ -41,6 +50,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                 )
                 notificationManager.cancel(alarmItemState.alarmItemId?.hashCode() ?: 0)
                 ringtonePlayer.stop()
+                vibrationHelper.stopVibration()
             }
         }
     }

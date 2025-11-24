@@ -11,6 +11,7 @@ import com.prmto.snozeloo.data.repository.RingtoneRepositoryImpl
 import com.prmto.snozeloo.domain.repository.AlarmRepository
 import com.prmto.snozeloo.domain.repository.RingtoneRepository
 import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtoneMediaPlayer
+import com.prmto.snozeloo.util.VibrationHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -71,5 +72,13 @@ object AppModule {
     @Singleton
     fun provideRingtoneMediaPlayer(): RingtoneMediaPlayer {
         return RingtoneMediaPlayer()
+    }
+
+    @Provides
+    @Singleton
+    fun provideVibrationHelper(
+        @ApplicationContext context: Context
+    ): VibrationHelper {
+        return VibrationHelper(context)
     }
 }
