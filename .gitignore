@@ -1,5 +1,9 @@
 # Built application files
 /*/build/
+/build/
+
+# Reports
+build/reports/problems
 
 # Local configuration file (sdk path, etc)
 local.properties
