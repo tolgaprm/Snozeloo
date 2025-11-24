@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.presentation.ringtone.playmanager
+package com.prmto.snozeloo.presentation.alarm.ringtone.playmanager
 
 import android.content.Context
 import android.media.AudioAttributes

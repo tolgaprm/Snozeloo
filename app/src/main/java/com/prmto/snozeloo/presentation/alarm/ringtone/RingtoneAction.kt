@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.presentation.ringtone
+package com.prmto.snozeloo.presentation.alarm.ringtone
 
 import com.prmto.snozeloo.domain.model.Ringtone
 

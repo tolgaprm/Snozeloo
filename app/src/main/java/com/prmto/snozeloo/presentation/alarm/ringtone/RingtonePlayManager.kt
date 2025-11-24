@@ -1,11 +1,11 @@
-package com.prmto.snozeloo.presentation.ringtone
+package com.prmto.snozeloo.presentation.alarm.ringtone
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.prmto.snozeloo.presentation.ringtone.playmanager.RingtonePlayState
-import com.prmto.snozeloo.presentation.ringtone.playmanager.RingtoneMediaPlayer
+import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtonePlayState
+import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtoneMediaPlayer
 
 @Composable
 fun RingtonePlayManager(

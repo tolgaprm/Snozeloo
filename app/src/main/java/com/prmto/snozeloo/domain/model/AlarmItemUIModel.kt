@@ -41,8 +41,8 @@ fun defaultAlarmItemUiModel(): AlarmItemUIModel {
     return AlarmItemUIModel(
         id = "",
         title = "",
-        timeHour = currentHour.toString(),
-        timeMinute = currentMinute.toString(),
+        timeHour =  String.format("%02d", currentHour),
+        timeMinute =  String.format("%02d", currentMinute),
         alarmRingtoneUri = "Default",
         alarmVolume = 5f,
         isVibrationEnabled = false,

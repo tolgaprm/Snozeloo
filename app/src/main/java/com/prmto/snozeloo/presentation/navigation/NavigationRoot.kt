@@ -20,12 +20,12 @@ import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewModel
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListScreen
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewEvent
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewModel
-import com.prmto.snozeloo.presentation.ringtone.RingtonePlayManager
-import com.prmto.snozeloo.presentation.ringtone.RingtoneScreen
-import com.prmto.snozeloo.presentation.ringtone.RingtoneUiEvent
-import com.prmto.snozeloo.presentation.ringtone.RingtoneViewModel
-import com.prmto.snozeloo.presentation.ringtone.playmanager.RingtonePlayState
-import com.prmto.snozeloo.presentation.ringtone.playmanager.rememberRingtonePlayManager
+import com.prmto.snozeloo.presentation.alarm.ringtone.RingtonePlayManager
+import com.prmto.snozeloo.presentation.alarm.ringtone.RingtoneScreen
+import com.prmto.snozeloo.presentation.alarm.ringtone.RingtoneUiEvent
+import com.prmto.snozeloo.presentation.alarm.ringtone.RingtoneViewModel
+import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtonePlayState
+import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.rememberRingtonePlayManager
 
 @Composable
 fun NavigationRoot(

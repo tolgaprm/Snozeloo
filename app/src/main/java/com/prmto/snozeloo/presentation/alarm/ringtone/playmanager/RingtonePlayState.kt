@@ -1,4 +1,4 @@
-package com.prmto.snozeloo.presentation.ringtone.playmanager
+package com.prmto.snozeloo.presentation.alarm.ringtone.playmanager
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
