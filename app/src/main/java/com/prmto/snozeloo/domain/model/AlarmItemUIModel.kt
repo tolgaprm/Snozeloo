@@ -15,7 +15,7 @@ data class AlarmItemUIModel(
     val nextOccurrenceAlarmTime: String,
     val isVibrationEnabled: Boolean,
     val alarmVolume: Float,
-    val alarmRingtone: String,
+    val alarmRingtoneUri: String,
 ) {
     val time get() = "$timeHour : $timeMinute"
 }
@@ -43,7 +43,7 @@ fun defaultAlarmItemUiModel(): AlarmItemUIModel {
         title = "",
         timeHour = currentHour.toString(),
         timeMinute = currentMinute.toString(),
-        alarmRingtone = "Default",
+        alarmRingtoneUri = "Default",
         alarmVolume = 5f,
         isVibrationEnabled = false,
         repeatingDays = persistentSetOf(),

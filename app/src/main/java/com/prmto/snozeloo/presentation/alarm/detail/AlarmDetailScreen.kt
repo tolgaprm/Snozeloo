@@ -19,8 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
@@ -183,7 +181,7 @@ fun AlarmDetailScreen(
                 }
             ) {
                 Text(
-                    text = alarmDetail.alarmRingtone,
+                    text = alarmDetail.alarmRingtoneUri,
                     style = MaterialTheme.typography.labelSmall,
                     color = Gray
                 )
@@ -279,7 +277,7 @@ private fun AlarmDetailScreenPreview() {
                 title = "",
                 timeHour = "00",
                 timeMinute = "00",
-                alarmRingtone = "",
+                alarmRingtoneUri = "",
                 alarmVolume = 5f,
                 isVibrationEnabled = false,
                 repeatingDays = persistentSetOf(),

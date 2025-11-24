@@ -125,7 +125,7 @@ private fun AlarmListScreenPreview() {
                     nextOccurrenceAlarmTime = "Alarm in 30 minutes",
                     isActive = false,
                     alarmVolume = 5f,
-                    alarmRingtone = "Default",
+                    alarmRingtoneUri = "Default",
                     isVibrationEnabled = false
                 ),
                 AlarmItemUIModel(
@@ -137,7 +137,7 @@ private fun AlarmListScreenPreview() {
                     nextOccurrenceAlarmTime = "Alarm in 30 minutes",
                     isActive = true,
                     alarmVolume = 5f,
-                    alarmRingtone = "Default",
+                    alarmRingtoneUri = "Default",
                     isVibrationEnabled = false,
                 )
             ),

@@ -124,7 +124,7 @@ private fun AlarmTriggerScreenPreview() {
                 nextOccurrenceAlarmTime = "Alarm in 30 minutes",
                 isActive = false,
                 alarmVolume = 5f,
-                alarmRingtone = "Default",
+                alarmRingtoneUri = "Default",
                 isVibrationEnabled = false
             ),
             onAction = {}

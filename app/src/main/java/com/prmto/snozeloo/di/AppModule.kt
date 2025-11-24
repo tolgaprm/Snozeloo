@@ -7,7 +7,9 @@ import com.prmto.snozeloo.data.alarm_manager.AndroidAlarmScheduler
 import com.prmto.snozeloo.data.local.SnoozelooDatabase
 import com.prmto.snozeloo.data.repository.AlarmRepositoryImpl
 import com.prmto.snozeloo.domain.alarm_manager.AlarmScheduler
+import com.prmto.snozeloo.data.repository.RingtoneRepositoryImpl
 import com.prmto.snozeloo.domain.repository.AlarmRepository
+import com.prmto.snozeloo.domain.repository.RingtoneRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,6 +39,14 @@ object AppModule {
         snoozelooDatabase: SnoozelooDatabase
     ): AlarmRepository {
         return AlarmRepositoryImpl(snoozelooDatabase.alarmDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRingtoneRepository(
+        @ApplicationContext context: Context
+    ): RingtoneRepository {
+        return RingtoneRepositoryImpl(context)
     }
 
     @Provides

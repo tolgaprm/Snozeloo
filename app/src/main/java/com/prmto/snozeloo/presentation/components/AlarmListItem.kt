@@ -110,7 +110,7 @@ private fun AlarmItemPreview() {
                 isActive = true,
                 isVibrationEnabled = false,
                 alarmVolume = 5f,
-                alarmRingtone = "Default"
+                alarmRingtoneUri = "Default"
             ),
             onCheckedChange = {}
         )

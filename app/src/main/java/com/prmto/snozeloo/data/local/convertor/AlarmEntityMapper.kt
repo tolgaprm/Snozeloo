@@ -14,7 +14,7 @@ fun AlarmEntity.toAlarmItemUIModel(): AlarmItemUIModel {
         repeatingDays = repeatingDays.toImmutableSet(),
         isVibrationEnabled = isVibrationEnabled,
         alarmVolume = alarmVolume,
-        alarmRingtone = alarmRingtone,
+        alarmRingtoneUri = alarmRingtone,
         nextOccurrenceAlarmTime = DateUtil.getNextOccurrenceAlarmTime(
             alarmHourTime = timeHour,
             alarmMinuteTime = timeMinute,
@@ -33,6 +33,6 @@ fun AlarmItemUIModel.toAlarmEntity(id: String): AlarmEntity {
         repeatingDays = repeatingDays,
         isVibrationEnabled = isVibrationEnabled,
         alarmVolume = alarmVolume,
-        alarmRingtone = alarmRingtone,
+        alarmRingtone = alarmRingtoneUri,
     )
 }

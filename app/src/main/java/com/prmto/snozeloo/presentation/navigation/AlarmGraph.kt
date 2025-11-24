@@ -14,5 +14,6 @@ sealed class AlarmGraph {
     @Serializable
     data class AlarmDetail(val alarmId: String?) : AlarmGraph()
     @Serializable
-    data object RingtoneList : AlarmGraph()
+    data class Ringtone(val ringtoneUri: String?) : AlarmGraph(){
+    }
 }

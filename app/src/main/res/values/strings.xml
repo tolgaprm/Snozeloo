@@ -11,4 +11,5 @@
     <string name="delete">Delete</string>
     <string name="turn_off">Turn off</string>
     <string name="snooze_for_5_minutes">Snooze for 5 minutes</string>
+    <string name="ringtone_settings">Ringtone Settings</string>
 </resources>

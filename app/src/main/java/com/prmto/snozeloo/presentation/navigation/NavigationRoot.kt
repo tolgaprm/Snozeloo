@@ -1,6 +1,5 @@
 package com.prmto.snozeloo.presentation.navigation
 
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -15,12 +14,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.prmto.snozeloo.core.util.ObserveAsEvents
-import com.prmto.snozeloo.presentation.alarm.list.AlarmListScreen
-import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewEvent
 import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailScreen
 import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewEvent
 import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewModel
+import com.prmto.snozeloo.presentation.alarm.list.AlarmListScreen
+import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewEvent
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewModel
+import com.prmto.snozeloo.presentation.ringtone.RingtoneScreen
+import com.prmto.snozeloo.presentation.ringtone.RingtoneUiEvent
+import com.prmto.snozeloo.presentation.ringtone.RingtoneViewModel
 
 @Composable
 fun NavigationRoot(
@@ -75,7 +77,7 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
                     }
 
                     is AlarmDetailViewEvent.NavigateToRingtoneList -> {
-                        navController.navigateToRingtoneList()
+                        navController.navigateToRingtoneList(null)
                     }
 
                     is AlarmDetailViewEvent.ShowSnackbarMessage -> {
@@ -85,8 +87,20 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
             }
         }
 
-        composable<AlarmGraph.RingtoneList> {
+        composable<AlarmGraph.Ringtone> {
+            val viewModel = hiltViewModel<RingtoneViewModel>()
+            RingtoneScreen(
+                state = viewModel.uiState,
+                onAction = viewModel::onAction
+            )
 
+            ObserveAsEvents(flow = viewModel.viewEvent) { event ->
+                when (event) {
+                    is RingtoneUiEvent.PopBackStack -> {
+                        navController.popBackStack()
+                    }
+                }
+            }
         }
     }
 }
@@ -95,6 +109,6 @@ private fun NavController.navigateToAlarmDetail(alarmId: String?) {
     navigate(AlarmGraph.AlarmDetail(alarmId))
 }
 
-private fun NavController.navigateToRingtoneList() {
-    navigate(AlarmGraph.RingtoneList)
+private fun NavController.navigateToRingtoneList(ringtoneUri: String?) {
+    navigate(AlarmGraph.Ringtone(ringtoneUri))
 }
