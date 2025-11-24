@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,9 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -77,7 +74,7 @@ fun RingtoneScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
-                items(state.ringtones) {
+                items(state.ringtones, key = { it.id }) {
                     RingtoneItem(
                         ringtone = it,
                         isSelected = it.uri == state.selectedRingtoneUri,
@@ -127,8 +124,8 @@ private fun RingtoneScreenPreview() {
         RingtoneScreen(
             state = RingtoneState(
                 ringtones = persistentListOf(
-                    Ringtone(name = "Slient", uri = "uri1"),
-                    Ringtone(name = "Ringtone 2", uri = "uri2")
+                    Ringtone(id = "",name = "Slient", uri = "uri1"),
+                    Ringtone(id = "",name = "Ringtone 2", uri = "uri2")
                 ),
                 selectedRingtoneUri = "uri2"
             )

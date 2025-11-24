@@ -20,9 +20,12 @@ import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewModel
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListScreen
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewEvent
 import com.prmto.snozeloo.presentation.alarm.list.AlarmListViewModel
+import com.prmto.snozeloo.presentation.ringtone.RingtonePlayManager
 import com.prmto.snozeloo.presentation.ringtone.RingtoneScreen
 import com.prmto.snozeloo.presentation.ringtone.RingtoneUiEvent
 import com.prmto.snozeloo.presentation.ringtone.RingtoneViewModel
+import com.prmto.snozeloo.presentation.ringtone.playmanager.RingtonePlayState
+import com.prmto.snozeloo.presentation.ringtone.playmanager.rememberRingtonePlayManager
 
 @Composable
 fun NavigationRoot(
@@ -88,7 +91,9 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
         }
 
         composable<AlarmGraph.Ringtone> {
+
             val viewModel = hiltViewModel<RingtoneViewModel>()
+            val ringtonePlayState: RingtonePlayState = rememberRingtonePlayManager()
             RingtoneScreen(
                 state = viewModel.uiState,
                 onAction = viewModel::onAction
@@ -99,8 +104,18 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
                     is RingtoneUiEvent.PopBackStack -> {
                         navController.popBackStack()
                     }
+
+                    is RingtoneUiEvent.PlayRingtone -> {
+                        ringtonePlayState.updateRingtoneUri(
+                            ringtoneUri = event.ringtone.uri
+                        )
+                    }
                 }
             }
+
+            RingtonePlayManager(
+                ringtonePlayState = ringtonePlayState
+            )
         }
     }
 }

@@ -34,6 +34,7 @@ class RingtoneViewModel @Inject constructor(
         when (action) {
             is RingtoneAction.OnSelectRingtone -> {
                 uiState = uiState.copy(selectedRingtoneUri = action.ringtone.uri)
+                sendViewEvent(RingtoneUiEvent.PlayRingtone(action.ringtone))
             }
 
             RingtoneAction.OnNavigateBack -> {
