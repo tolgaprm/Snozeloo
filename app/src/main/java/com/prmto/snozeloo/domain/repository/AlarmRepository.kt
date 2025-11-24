@@ -14,4 +14,6 @@ interface AlarmRepository {
    suspend fun updateAlarmEnabled(alarmId: String, isEnabled: Boolean)
 
    suspend fun deleteAlarmById(alarmId: String)
+
+   suspend fun updateAlarmRingtoneUriAndName(alarmId: String, ringtoneUri: String, ringtoneName: String)
 }

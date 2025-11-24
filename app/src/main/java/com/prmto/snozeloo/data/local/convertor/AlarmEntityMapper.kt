@@ -14,12 +14,13 @@ fun AlarmEntity.toAlarmItemUIModel(): AlarmItemUIModel {
         repeatingDays = repeatingDays.toImmutableSet(),
         isVibrationEnabled = isVibrationEnabled,
         alarmVolume = alarmVolume,
-        alarmRingtoneUri = alarmRingtone,
+        alarmRingtoneUri = alarmRingtoneUri,
         nextOccurrenceAlarmTime = DateUtil.getNextOccurrenceAlarmTime(
             alarmHourTime = timeHour,
             alarmMinuteTime = timeMinute,
             alarmDayValue = repeatingDays.toImmutableSet()
         ),
+        alarmRingtoneName = alarmRingtoneName
     )
 }
 
@@ -33,6 +34,7 @@ fun AlarmItemUIModel.toAlarmEntity(id: String): AlarmEntity {
         repeatingDays = repeatingDays,
         isVibrationEnabled = isVibrationEnabled,
         alarmVolume = alarmVolume,
-        alarmRingtone = alarmRingtoneUri,
+        alarmRingtoneUri = alarmRingtoneUri,
+        alarmRingtoneName = alarmRingtoneName
     )
 }

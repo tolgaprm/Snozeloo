@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -35,6 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prmto.snozeloo.R
 import com.prmto.snozeloo.domain.model.Ringtone
+import com.prmto.snozeloo.presentation.components.ActionButtonWithIcon
+import com.prmto.snozeloo.presentation.components.ActionButtonWithText
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 import kotlinx.collections.immutable.persistentListOf
 
@@ -55,6 +59,13 @@ fun RingtoneScreen(
                             contentDescription = "Back"
                         )
                     }
+                },
+                actions = {
+                    ActionButtonWithIcon(
+                        modifier = Modifier.padding(horizontal = 16.dp).size(48.dp),
+                        icon =  Icons.Default.Save,
+                        onClick = { onAction(RingtoneAction.OnSave) }
+                    )
                 }
             )
         }
@@ -77,7 +88,7 @@ fun RingtoneScreen(
                 items(state.ringtones, key = { it.id }) {
                     RingtoneItem(
                         ringtone = it,
-                        isSelected = it.uri == state.selectedRingtoneUri,
+                        isSelected = it.uri == state.selectedRingtone?.uri,
                         onSelect = { onAction(RingtoneAction.OnSelectRingtone(it)) }
                     )
                 }
@@ -124,10 +135,10 @@ private fun RingtoneScreenPreview() {
         RingtoneScreen(
             state = RingtoneState(
                 ringtones = persistentListOf(
-                    Ringtone(id = "",name = "Slient", uri = "uri1"),
+                    Ringtone(id = "sasd",name = "Slient", uri = "uri1"),
                     Ringtone(id = "",name = "Ringtone 2", uri = "uri2")
                 ),
-                selectedRingtoneUri = "uri2"
+                selectedRingtone = Ringtone(id = "",name = "Ringtone 2", uri = "uri2")
             )
         ) { }
     }

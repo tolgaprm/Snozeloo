@@ -11,10 +11,11 @@ class RingtoneMediaPlayer {
 
     fun play(
         context: Context,
-        ringtoneUri: String,
-        volume: Float = 0.5f,
+        ringtoneUri: String?,
+        volume: Float? = 0.5f,
         loop: Boolean = true
     ) {
+        if (ringtoneUri == null || volume == null) return
         release()
         runCatching {
             val mp = MediaPlayer().apply {

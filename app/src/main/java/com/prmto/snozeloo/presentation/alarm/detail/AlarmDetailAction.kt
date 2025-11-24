@@ -16,4 +16,9 @@ sealed interface AlarmDetailAction {
     data class OnChangedAlarmTitle(val title: String) : AlarmDetailAction
     data class OnChangedAlarmVolume(val alarmVolume: Float) : AlarmDetailAction
     data class OnChangedAlarmVibrationEnabled(val isVibrationEnabled: Boolean) : AlarmDetailAction
+
+    data class OnAlarmRingtoneNameChanged(
+        val ringtoneName: String?,
+        val ringtoneUri: String?
+    ) : AlarmDetailAction
 }

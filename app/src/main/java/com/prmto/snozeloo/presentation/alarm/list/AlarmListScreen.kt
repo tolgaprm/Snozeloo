@@ -126,7 +126,8 @@ private fun AlarmListScreenPreview() {
                     isActive = false,
                     alarmVolume = 5f,
                     alarmRingtoneUri = "Default",
-                    isVibrationEnabled = false
+                    isVibrationEnabled = false,
+                    alarmRingtoneName = "Default"
                 ),
                 AlarmItemUIModel(
                     id = "2",
@@ -139,6 +140,7 @@ private fun AlarmListScreenPreview() {
                     alarmVolume = 5f,
                     alarmRingtoneUri = "Default",
                     isVibrationEnabled = false,
+                    alarmRingtoneName = "Default"
                 )
             ),
             onAction = {}

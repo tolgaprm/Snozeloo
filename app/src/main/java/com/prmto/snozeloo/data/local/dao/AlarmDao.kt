@@ -27,4 +27,7 @@ interface AlarmDao {
 
     @Query("DELETE FROM alarm WHERE id = :alarmId")
     suspend fun deleteAlarmById(alarmId: String?)
+
+    @Query("UPDATE alarm SET alarmRingtoneUri = :ringtoneUri, alarmRingtoneName = :ringtoneName WHERE id = :alarmId")
+    suspend fun updateAlarmRingtoneUriAndName(alarmId: String?, ringtoneUri: String?, ringtoneName: String?)
 }

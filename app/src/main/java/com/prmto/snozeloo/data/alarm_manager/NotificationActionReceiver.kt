@@ -8,6 +8,7 @@ import android.content.Intent
 import com.prmto.snozeloo.core.util.getAlarmItemAndIsSnooze
 import com.prmto.snozeloo.domain.alarm_manager.AlarmScheduler
 import com.prmto.snozeloo.notification.AlarmNotifier
+import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtoneMediaPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -17,6 +18,8 @@ class NotificationActionReceiver : BroadcastReceiver() {
     @Inject
     lateinit var alarmScheduler: AlarmScheduler
 
+    @Inject
+    lateinit var ringtonePlayer: RingtoneMediaPlayer
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val notificationManager =
@@ -27,6 +30,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                 notificationManager.cancel(
                     intent.getAlarmItemAndIsSnooze().alarmItemId?.hashCode() ?: 0
                 )
+                ringtonePlayer.stop()
             }
 
             AlarmNotifier.SNOOZE_ALARM_ACTION -> {
@@ -36,6 +40,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                     snoozeTimeInMinute = ALARM_SNOOZE_TIME_IN_MINUTE
                 )
                 notificationManager.cancel(alarmItemState.alarmItemId?.hashCode() ?: 0)
+                ringtonePlayer.stop()
             }
         }
     }

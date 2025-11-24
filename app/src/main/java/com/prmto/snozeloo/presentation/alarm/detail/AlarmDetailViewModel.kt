@@ -73,7 +73,12 @@ class AlarmDetailViewModel @Inject constructor(
             }
 
             is AlarmDetailAction.OnClickAlarmRingtone -> {
-                sendViewEvent(AlarmDetailViewEvent.NavigateToRingtoneList)
+                sendViewEvent(
+                    AlarmDetailViewEvent.NavigateToRingtoneList(
+                        alarmId = selectedAlarmId,
+                        ringtoneUri = alarmDetailState.value.alarmRingtoneUri
+                    )
+                )
             }
 
             is AlarmDetailAction.OnClickedRepeatingDay -> {
@@ -147,6 +152,17 @@ class AlarmDetailViewModel @Inject constructor(
                     selectedAlarmId?.let {
                         deleteAlarmUseCase(selectedAlarmId)
                         sendViewEvent(AlarmDetailViewEvent.PopBackStack)
+                    }
+                }
+            }
+
+            is AlarmDetailAction.OnAlarmRingtoneNameChanged -> {
+                if (action.ringtoneName != null && action.ringtoneUri != null){
+                    _alarmDetailState.update {
+                        it.copy(
+                            alarmRingtoneName = action.ringtoneName,
+                            alarmRingtoneUri = action.ringtoneUri
+                        )
                     }
                 }
             }

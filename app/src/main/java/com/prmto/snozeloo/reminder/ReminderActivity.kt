@@ -10,8 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.prmto.snozeloo.core.util.ObserveAsEvents
 import com.prmto.snozeloo.core.util.getAlarmItemAndIsSnooze
+import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtoneMediaPlayer
 import com.prmto.snozeloo.presentation.theme.SnozelooTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReminderActivity : ComponentActivity() {
@@ -19,6 +21,9 @@ class ReminderActivity : ComponentActivity() {
     private val viewModel: ReminderViewModel by viewModels()
 
     private lateinit var notificationManager: NotificationManager
+
+    @Inject
+    lateinit var ringtonePlayer: RingtoneMediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +51,7 @@ class ReminderActivity : ComponentActivity() {
                     is ReminderViewEvent.TurnOffAlarm -> {
                         // ringtone stop
                         this.finish()
+                        ringtonePlayer.stop()
                         notificationManager.cancel(alarmIntentExt.alarmItemId?.hashCode() ?: 0)
                     }
                 }

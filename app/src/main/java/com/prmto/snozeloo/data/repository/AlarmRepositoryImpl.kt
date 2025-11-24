@@ -42,4 +42,8 @@ class AlarmRepositoryImpl @Inject constructor(
     override suspend fun deleteAlarmById(alarmId: String) {
         alarmDao.deleteAlarmById(alarmId)
     }
+
+    override suspend fun updateAlarmRingtoneUriAndName(alarmId: String, ringtoneUri: String, ringtoneName: String) {
+        alarmDao.updateAlarmRingtoneUriAndName(alarmId, ringtoneUri, ringtoneName)
+    }
 }

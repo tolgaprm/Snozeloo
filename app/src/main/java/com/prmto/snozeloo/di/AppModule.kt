@@ -10,6 +10,7 @@ import com.prmto.snozeloo.domain.alarm_manager.AlarmScheduler
 import com.prmto.snozeloo.data.repository.RingtoneRepositoryImpl
 import com.prmto.snozeloo.domain.repository.AlarmRepository
 import com.prmto.snozeloo.domain.repository.RingtoneRepository
+import com.prmto.snozeloo.presentation.alarm.ringtone.playmanager.RingtoneMediaPlayer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,5 +65,11 @@ object AppModule {
         alarmManager: AlarmManager
     ): AlarmScheduler {
         return AndroidAlarmScheduler(context, alarmManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRingtoneMediaPlayer(): RingtoneMediaPlayer {
+        return RingtoneMediaPlayer()
     }
 }

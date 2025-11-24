@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.prmto.snozeloo.core.util.ObserveAsEvents
+import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailAction
 import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailScreen
 import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewEvent
 import com.prmto.snozeloo.presentation.alarm.detail.AlarmDetailViewModel
@@ -62,6 +63,19 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
         composable<AlarmGraph.AlarmDetail> {
             val viewModel = hiltViewModel<AlarmDetailViewModel>()
             val alarmDetail by viewModel.alarmDetailState.collectAsStateWithLifecycle()
+            val ringtoneName = navController.currentBackStackEntry?.savedStateHandle?.get<String>(
+                SELECTED_RINGTONE_NAME
+            )
+            val ringtoneUri = navController.currentBackStackEntry?.savedStateHandle?.get<String>(
+                SELECTED_RINGTONE_URI
+            )
+
+            viewModel.onAlarmDetailAction(
+                AlarmDetailAction.OnAlarmRingtoneNameChanged(
+                    ringtoneName = ringtoneName,
+                    ringtoneUri = ringtoneUri
+                )
+            )
 
             val snackbarHostState = remember { SnackbarHostState() }
 
@@ -80,7 +94,12 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
                     }
 
                     is AlarmDetailViewEvent.NavigateToRingtoneList -> {
-                        navController.navigateToRingtoneList(null)
+                        navController.navigate(
+                            AlarmGraph.Ringtone(
+                                alarmId = event.alarmId,
+                                ringtoneUri = event.ringtoneUri
+                            )
+                        )
                     }
 
                     is AlarmDetailViewEvent.ShowSnackbarMessage -> {
@@ -102,6 +121,14 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
             ObserveAsEvents(flow = viewModel.viewEvent) { event ->
                 when (event) {
                     is RingtoneUiEvent.PopBackStack -> {
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            SELECTED_RINGTONE_NAME,
+                            event.selectedRingtoneName
+                        )
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            SELECTED_RINGTONE_URI,
+                            event.selectedRingtoneUri
+                        )
                         navController.popBackStack()
                     }
 
@@ -120,10 +147,9 @@ private fun NavGraphBuilder.alarmGraph(navController: NavHostController) {
     }
 }
 
+const val SELECTED_RINGTONE_NAME = "selectedRingtoneName"
+const val SELECTED_RINGTONE_URI = "selectedRingtoneUri"
+
 private fun NavController.navigateToAlarmDetail(alarmId: String?) {
     navigate(AlarmGraph.AlarmDetail(alarmId))
-}
-
-private fun NavController.navigateToRingtoneList(ringtoneUri: String?) {
-    navigate(AlarmGraph.Ringtone(ringtoneUri))
 }

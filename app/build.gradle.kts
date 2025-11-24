@@ -61,6 +61,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.androidx.material.icons.extended)
 
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.compiler)

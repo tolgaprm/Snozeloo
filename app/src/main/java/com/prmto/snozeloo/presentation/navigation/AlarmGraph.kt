@@ -11,9 +11,11 @@ sealed class NavigationGraphs {
 sealed class AlarmGraph {
     @Serializable
     data object AlarmList : AlarmGraph()
+
     @Serializable
     data class AlarmDetail(val alarmId: String?) : AlarmGraph()
+
     @Serializable
-    data class Ringtone(val ringtoneUri: String?) : AlarmGraph(){
+    data class Ringtone(val alarmId: String?, val ringtoneUri: String?) : AlarmGraph() {
     }
 }

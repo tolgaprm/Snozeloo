@@ -14,5 +14,6 @@ data class AlarmEntity(
     val repeatingDays:Set<DayValue>,
     val isVibrationEnabled: Boolean,
     val alarmVolume: Float,
-    val alarmRingtone: String
+    val alarmRingtoneUri: String,
+    val alarmRingtoneName: String
 )

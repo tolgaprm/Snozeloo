@@ -125,7 +125,8 @@ private fun AlarmTriggerScreenPreview() {
                 isActive = false,
                 alarmVolume = 5f,
                 alarmRingtoneUri = "Default",
-                isVibrationEnabled = false
+                isVibrationEnabled = false,
+                alarmRingtoneName = "Default"
             ),
             onAction = {}
         )

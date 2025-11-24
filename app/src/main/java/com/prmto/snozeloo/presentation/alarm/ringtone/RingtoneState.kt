@@ -6,6 +6,6 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class RingtoneState(
     val ringtones: ImmutableList<Ringtone> = persistentListOf(),
-    val selectedRingtoneUri: String? = null,
+    val selectedRingtone: Ringtone? = null,
     val isLoading: Boolean = false
 )

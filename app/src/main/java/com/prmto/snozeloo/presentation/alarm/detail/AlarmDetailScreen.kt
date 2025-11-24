@@ -38,6 +38,8 @@ import com.prmto.snozeloo.domain.model.AlarmItemUIModel
 import com.prmto.snozeloo.domain.model.DayValue
 import com.prmto.snozeloo.presentation.alarm.detail.components.DetailColumnItemSection
 import com.prmto.snozeloo.presentation.alarm.detail.components.DetailRowItemSection
+import com.prmto.snozeloo.presentation.components.ActionButtonWithIcon
+import com.prmto.snozeloo.presentation.components.ActionButtonWithText
 import com.prmto.snozeloo.presentation.components.DayChip
 import com.prmto.snozeloo.presentation.components.SnoozelooEditText
 import com.prmto.snozeloo.presentation.components.SnoozelooSwitch
@@ -69,8 +71,9 @@ fun AlarmDetailScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                ActionButton(
+                ActionButtonWithText(
                     modifier = Modifier.align(Alignment.End),
+                    text = stringResource(R.string.save),
                     enabled = true,
                     onClick = {
                         isShowAlarmNameDialog = false
@@ -88,16 +91,17 @@ fun AlarmDetailScreen(
             TopAppBar(
                 title = {},
                 navigationIcon = {
-                    CloseButton(
-                        enabled = true,
+                    ActionButtonWithIcon(
+                        icon = Icons.Default.Close,
                         onClick = {
                             onAction(AlarmDetailAction.OnClickClose)
                         }
                     )
                 },
                 actions = {
-                    ActionButton(
+                    ActionButtonWithText(
                         enabled = isSaveButtonEnable,
+                        text = stringResource(R.string.save),
                         onClick = {
                             onAction(AlarmDetailAction.OnClickSave)
                         }
@@ -181,7 +185,7 @@ fun AlarmDetailScreen(
                 }
             ) {
                 Text(
-                    text = alarmDetail.alarmRingtoneUri,
+                    text = alarmDetail.alarmRingtoneName,
                     style = MaterialTheme.typography.labelSmall,
                     color = Gray
                 )
@@ -211,7 +215,7 @@ fun AlarmDetailScreen(
                 )
             }
 
-            if (alarmDetail.id.isNotEmpty()){
+            if (alarmDetail.id.isNotEmpty()) {
                 Button(
                     onClick = {
                         onAction(AlarmDetailAction.OnClickDelete)
@@ -227,46 +231,6 @@ fun AlarmDetailScreen(
     }
 }
 
-@Composable
-private fun CloseButton(
-    enabled: Boolean,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
-    Button(
-        modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
-        contentPadding = PaddingValues(0.dp),
-        onClick = onClick,
-        enabled = enabled,
-        colors = buttonColors(),
-    ) {
-        Icon(
-            imageVector = Icons.Default.Close,
-            contentDescription = "Close",
-        )
-    }
-}
-
-@Composable
-private fun ActionButton(
-    modifier: Modifier = Modifier,
-    enabled: Boolean,
-    onClick: () -> Unit,
-) {
-    Button(
-        modifier = modifier,
-        onClick = onClick,
-        enabled = enabled,
-        colors = buttonColors(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 6.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.save)
-        )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 private fun AlarmDetailScreenPreview() {
@@ -278,6 +242,7 @@ private fun AlarmDetailScreenPreview() {
                 timeHour = "00",
                 timeMinute = "00",
                 alarmRingtoneUri = "",
+                alarmRingtoneName = "Default",
                 alarmVolume = 5f,
                 isVibrationEnabled = false,
                 repeatingDays = persistentSetOf(),
