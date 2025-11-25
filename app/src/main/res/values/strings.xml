@@ -12,4 +12,7 @@
     <string name="turn_off">Turn off</string>
     <string name="snooze_for_5_minutes">Snooze for 5 minutes</string>
     <string name="ringtone_settings">Ringtone Settings</string>
+    <string name="permission_required_title">Permission Required</string>
+    <string name="notification_permission_message">Please grant notification permission to use Snozeloo.</string>
+    <string name="ok">OK</string>
 </resources>
